@@ -14,46 +14,46 @@ import javax.validation.Valid;
 @Controller
 public class HomeController {
     @Autowired
-    TodoRepository todoRepository;
+    CourseRepository courseRepository;
 
     @RequestMapping("/")
-    public String listTodos(Model model){
-        model.addAttribute("todos", todoRepository.findAll());
+    public String listCourses(Model model){
+        model.addAttribute("todos", courseRepository.findAll());
         return "list";
     }
 
     @GetMapping("/add")
-    public String todoForm(Model model){
-        model.addAttribute("todo", new Todo());
-        return "todoform";
+    public String courseForm(Model model){
+        model.addAttribute("todo", new Course());
+        return "courseform";
     }
 
     @PostMapping("/process")
-    public String processForm(@Valid Todo todo, BindingResult result){
+    public String processForm(@Valid Course course, BindingResult result){
         if (result.hasErrors()){
-            return "todoform";
+            return "courseform";
         }
-        todoRepository.save(todo);
+        courseRepository.save(course);
         return "redirect:/";
     }
 
     @RequestMapping("/create/{id}")
-    public String showTodo(@PathVariable("id") long id, Model model)
+    public String showCourse(@PathVariable("id") long id, Model model)
     {
-        model.addAttribute("todo", todoRepository.findById(id).get());
-        return "todoform";
+        model.addAttribute("todo", courseRepository.findById(id).get());
+        return "courseform";
     }
 
     @RequestMapping("/update/{id}")
-public String updateTodo(@PathVariable("id") long id,
+public String updateCourse(@PathVariable("id") long id,
                          Model model){
-        model.addAttribute("todo", todoRepository.findById(id).get());
-        return "todoform";
+        model.addAttribute("todo", courseRepository.findById(id).get());
+        return "courseform";
     }
 
     @RequestMapping("delete/{id}")
-public String delTodo(@PathVariable("id") long id){
-todoRepository.deleteById(id);
+public String delCourse(@PathVariable("id") long id){
+courseRepository.deleteById(id);
 return "redirect:/";
 }
 }
